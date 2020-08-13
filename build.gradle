@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'application'
 }
 
 group 'org.example'
@@ -9,14 +9,45 @@ repositories {
     mavenCentral()
 }
 
+application {
+    mainClassName = 'Alchemy'
+}
+
+run {
+    standardInput = System.in
+}
+
 jar {
     manifest {
-        attributes('Implementation-Title': project.name,
-                'Implementation-Version': project.version,
-        'Main-Class': 'TravelRestriction')
+        attributes "Main-Class": "DemoMainWithDep"
     }
+
+    from {
+        configurations.compile.collect {it.isDirectory() ? it : zipTree(it)}
+    }
+}
+
+task alchemyJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Facebook code challenge alchemy',
+        'Implementation-Version': version,
+        'Main-Class': 'Alchemy'
+        baseName = project.name + '-alchemy'
+    }
+    with jar
+}
+
+task travelRestrictionJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Facebook code challenge alchemy',
+                'Implementation-Version': version,
+                'Main-Class': 'TravelRestriction'
+        baseName = project.name + '-travel-restriction'
+    }
+    with jar
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'joda-time:joda-time:2.10.6'
 }
