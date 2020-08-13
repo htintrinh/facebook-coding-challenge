@@ -1,5 +1,3 @@
 Manifest-Version: 1.0
-Implementation-Title: coding-challenge
-Implementation-Version: 1.0-SNAPSHOT
-Main-Class: TravelRestriction
+Main-Class: DemoMainWithDep
 
